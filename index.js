@@ -32,7 +32,8 @@ const prompt = () => {
                 'Update employee',
                 'Add employee',
                 'Add role',
-                'Add department'
+                'Add department',
+                'Exit app'
             ]
         }
     ]).then(function (val) {
@@ -57,6 +58,9 @@ const prompt = () => {
                 break;
             case 'Add department':
                 addDepartment();
+                break;
+            case 'Exit app':
+                exitApp();
                 break;
         }
     });
@@ -240,5 +244,28 @@ const addRole = () => {
 };
 
 const addDepartment = () => {
-
+    inquirer.prompt([
+        {
+            name: "name",
+            type: "imput",
+            message: "What department would you like to add?"
+        }
+    ]).then(function (res) {
+        connection.query(
+            "INSERT INTO department SET ?",
+            {
+                name: res.name
+            },
+            function (err) {
+                if (err) throw err;
+                prompt();
+            }
+        )
+    })
 };
+
+const exitApp = () => {
+    console.log("Thank you for using this app")
+    connection.end();
+    process.exit;
+}
