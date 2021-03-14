@@ -132,7 +132,7 @@ const addEmployee = () => {
         },
         {
             name: "choice",
-            type: "rawList",
+            type: "rawlist",
             message: "What is their managers name? Press Enter if there is no manager",
             choices: chooseManager()
         }
@@ -153,11 +153,46 @@ const addEmployee = () => {
 };
 
 const updateEmployee = () => {
-
+    connection.query(
+        "SELECT * FROM employee;",
+        (err, res) => {
+            if (err) throw err;]
+            inquirer.prompt([
+                {
+                    type: "rawlist",
+                    message: "What is the employees last name?",
+                    name: "lastName",
+                    choices: () => {
+                        var lastName = [];
+                        for (var i = 0; i < res.length; i++) {
+                            lastName.push(res[i].last_name);
+                        }
+                        return lastName;
+                    }
+                },
+                {
+                    type: "rawlist",
+                    message: "What is the employees new role?",
+                    name: "role",
+                    choices: chooseRole()
+                }
+            ]).then((value) => {
+                var roleId = chooseRole().indexOf(value.role) + 1;
+                connection.query(`UPDATE employee SET role_id = ${roleId} WHERE last_name = ?`,
+                    [value.lastName],
+                    (err, res) => {
+                        if (err) throw err;
+                        console.table(res);
+                        prompt();
+                    }
+                )
+            })
+        }
+    )
 };
 
 const addRole = () => {
-
+    
 };
 
 const addDepartment = () => {
