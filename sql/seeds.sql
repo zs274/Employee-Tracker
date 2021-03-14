@@ -51,7 +51,7 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Cilian", "Hilton", 3, null);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Jacob", "Webb", 8, null);
+VALUES ("Jacob", "Webb", 8, 1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Charlie", "Stevens", 9, null);
@@ -60,27 +60,27 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Kelly", "Krause", 4, null);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Victor", "Lovell", 2, null);
+VALUES ("Victor", "Lovell", 2, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Lauren", "Bowers", 5, 4);
+VALUES ("Lauren", "Bowers", 5, null);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Chloe", "Bauer", 6, 1);
+VALUES ("Chloe", "Bauer", 6, 3);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Kaiden", "Bernard", 8, null);
+VALUES ("Kaiden", "Bernard", 8, 1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Susan", "Grant", 1, 3);
+VALUES ("Susan", "Grant", 1, 6);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Tayah", "Cole", 1, 3);
+VALUES ("Tayah", "Cole", 7, 3);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Martin", "Mullen", 5, 4);
+VALUES ("Martin", "Mullen", 2, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Mattie", "Guerrero", 1, 4);
+VALUES ("Mattie", "Guerrero", 1, 6);
 
 SELECT * FROM employee;
