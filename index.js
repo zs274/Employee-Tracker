@@ -156,7 +156,7 @@ const updateEmployee = () => {
     connection.query(
         "SELECT * FROM employee;",
         (err, res) => {
-            if (err) throw err;]
+            if (err) throw err;
             inquirer.prompt([
                 {
                     type: "rawlist",
@@ -192,7 +192,51 @@ const updateEmployee = () => {
 };
 
 const addRole = () => {
-    
+    connection.query("SELECT * FROM department", function (err, res) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                name: "newRole",
+                type: "input",
+                message: "What is the title of the new role?"
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What is the salary for this position? Please enter as a number. "
+            },
+            {
+                name: "chooseDept",
+                type: "rawlist",
+                choices: function () {
+                    var depts = [];
+                    for (var i = 0; i < res.length; i++) {
+                        depts.push(res[i].name);
+                    }
+                    return depts;
+                },
+            }
+        ]).then(function (answer) {
+            let deptID;
+            for (let j = 0; j < res.length; j++) {
+                if (res[j].name == answer.chooseDept) {
+                    deptID = res[j].id;
+                }
+            }
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                    title: answer.newRole,
+                    salary: answer.salary,
+                    department_id: deptID
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    prompt();
+                }
+            )
+        })
+    })
 };
 
 const addDepartment = () => {
