@@ -35,8 +35,8 @@ const prompt = () => {
                 'Add department'
             ]
         }
-    ]).then(function (value) {
-        switch (value.choice) {
+    ]).then(function (val) {
+        switch (val.choice) {
             case 'View all employees':
                 viewAllEmployees();
                 break;
@@ -65,29 +65,29 @@ const prompt = () => {
 
 const viewAllEmployees = () => {
     connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
-      function (err, res) {
-        if (err) throw err
-        console.table(res)
-        prompt()
-      })
-  };
+        function (err, res) {
+            if (err) throw err
+            console.table(res)
+            prompt()
+        })
+};
 
 const viewByRole = () => {
     connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;",
-    function (err, res) {
-        if (err) throw err
-        console.table(res)
-        prompt()
-    })
+        function (err, res) {
+            if (err) throw err
+            console.table(res)
+            prompt()
+        })
 };
 
-const viewByDepartment =() => {
+const viewByDepartment = () => {
     connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
-    function (err, res) {
-        if (err) throw err
-        console.table(res)
-        prompt()
-    })
+        function (err, res) {
+            if (err) throw err
+            console.table(res)
+            prompt()
+        })
 };
 
 var roles = [];
@@ -105,18 +105,54 @@ var managers = [];
 const chooseManager = () => {
     connection.query("SELECT first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, res) {
         if (err) throw err
-        for (var i = 0; i <res.length, i++) {
+        for (var i = 0; i < res.length; i++) {
             managers.push(res[i].first_name);
         }
     })
     return managers;
 }
 
-const updateEmployee = () => {
-
+const addEmployee = () => {
+    inquirer.prompt([
+        {
+            name: "first",
+            type: "input",
+            message: "Enter their first name"
+        },
+        {
+            name: "last",
+            type: "input",
+            message: "Enter their last name"
+        },
+        {
+            name: "role",
+            type: "list",
+            message: "What is their role?",
+            choices: chooseRole()
+        },
+        {
+            name: "choice",
+            type: "rawList",
+            message: "What is their managers name? Press Enter if there is no manager",
+            choices: chooseManager()
+        }
+    ]).then(function (val) {
+        var roleId = chooseRole().indexOf(val.role) + 1
+        var managerId = chooseManager().indexOf(val.choice) + 1
+        connection.query("INSERT INTO employee SET ?", {
+            first_name: val.first,
+            last_name: val.last,
+            role_id: roleId,
+            manager_id: managerId,
+        }, function (err) {
+            if (err) throw err
+            console.table(val)
+            prompt()
+        })
+    });
 };
 
-const addEmployee = () => {
+const updateEmployee = () => {
 
 };
 
