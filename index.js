@@ -81,22 +81,49 @@ const viewByRole = () => {
     })
 };
 
-function viewByDepartment() {
+const viewByDepartment =() => {
+    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
+    function (err, res) {
+        if (err) throw err
+        console.table(res)
+        prompt()
+    })
+};
+
+var roles = [];
+const chooseRole = () => {
+    connection.query("SELECT * FROM role", function (err, res) {
+        if (err) throw err
+        for (var i = 0; i < res.length; i++) {
+            roles.push(res[i].title);
+        }
+    })
+    return roles;
+}
+
+var managers = [];
+const chooseManager = () => {
+    connection.query("SELECT first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, res) {
+        if (err) throw err
+        for (var i = 0; i <res.length, i++) {
+            managers.push(res[i].first_name);
+        }
+    })
+    return managers;
+}
+
+const updateEmployee = () => {
 
 };
 
-function updateEmployee() {
+const addEmployee = () => {
 
 };
 
-function addEmployee() {
+const addRole = () => {
 
 };
 
-function addRole() {
-
-};
-
-function addDepartment() {
+const addDepartment = () => {
 
 };
