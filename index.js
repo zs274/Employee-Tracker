@@ -6,8 +6,8 @@ const connection = mysql2.createConnection({
     host: 'localhost',
     port: '3306',
     user: 'root',
-    password: '',
-    database: 'employees_db',
+    password: 'password',
+    database: 'employee_db',
 });
 
 connection.connect(function (err) {
@@ -58,8 +58,35 @@ const prompt = () => {
             case 'Add department':
                 addDepartment();
                 break;
-
         }
 
     })
 }
+
+function viewAllEmployees() {
+
+};
+
+function viewByRole() {
+
+};
+
+function viewByDepartment() {
+
+};
+
+function updateEmployee() {
+
+};
+
+function addEmployee() {
+
+};
+
+function addRole() {
+
+};
+
+function addDepartment() {
+
+};
